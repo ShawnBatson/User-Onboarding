@@ -35,14 +35,19 @@ const NewUser = ({ errors, touched, values, status }) => {
 
           <label forHTML="termsAndConditions">
             Terms and Conditions
-            <Field as="checkbox" name="terms" />
+            <Field type="checkbox" name="terms" />
             {touched.terms && errors.terms && <p>{errors.terms}</p>}
           </label>
 
           <button type="submit">Submit!</button>
         </Form>
       </div>
-      user.map(user => <div>{values.name}</div>)
+      {user.map(user => (
+        <div className="returnedCard">
+          <h1>{user.name}</h1>
+          <h6>{user.email}</h6>
+        </div>
+      ))}
     </div>
   );
 };
@@ -59,9 +64,7 @@ const formikUserForm = withFormik({
   validationSchema: Yup.object().shape({
     name: Yup.string().required("I'd really like to know your name"),
     email: Yup.string().required("It's annoying, but this is required"),
-    password: Yup.string()
-      .password()
-      .required("Don't forget to make a strong password!"),
+    password: Yup.string().required("Don't forget to make a strong password!"),
     termsAndConditions: Yup.bool().required(
       "I know you didn't read this, so just check that you've read them anyway."
     )
